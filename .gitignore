@@ -41,3 +41,22 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+# IntelliJ
+.idea/
+
+# Gradle
+.gradle/
+
+# H2 database
+data/*.mv.db
+data/*.trace.db
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kotlin build
