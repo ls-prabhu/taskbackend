@@ -2,10 +2,11 @@ package com.to.`do`
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
 
 @jakarta.persistence.Entity
 data class ToDo(
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     var title: String,
     @JsonFormat(pattern = "yyyy-MM-dd")
