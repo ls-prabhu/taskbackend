@@ -18,25 +18,22 @@ class ToDoController(private val repo : ToDoRepository) {
     }
 
     // Use PUT for updates
-    @PutMapping("/{id}")
-    fun update(
-        @PathVariable id: Long,
-        @RequestBody updatedToDo: ToDo
-    ) : ToDo{
-        val todo = repo.findById(id).orElseThrow()
-        todo.date = updatedToDo.date
-        todo.time = updatedToDo.time
-        todo.title = updatedToDo.title
-        todo.completed = updatedToDo.completed
-        when{
-            !todo.completed&&updatedToDo.completed->
-                updatedToDo.completedDate=LocalDate.now()
-            todo.completed&&!updatedToDo.completed->
-                updatedToDo.completedDate=null
-        }
-        todo.completedDate=updatedToDo.completedDate
-        return repo.save(todo)
+    @PatchMapping("/{id}")
+    fun patch(@PathVariable id: Long, @RequestBody body: ToDoPatch): ToDo {
+    val todo = repo.findById(id).orElseThrow()
+
+    body.title?.let { todo.title = it }
+    body.date?.let { todo.date = it }
+    body.time?.let { todo.time = it }
+
+    body.completed?.let { newValue ->
+        if (!todo.completed && newValue) todo.completedDate = LocalDate.now()
+        if (todo.completed && !newValue) todo.completedDate = null
+        todo.completed = newValue
     }
+
+    return repo.save(todo)
+}
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long) {
@@ -49,7 +46,10 @@ class ToDoController(private val repo : ToDoRepository) {
 
     // Get todos grouped by status (incomplete first, then completed)
     @GetMapping("/completed")
-    fun CompleteTask() : List<ToDo> = repo.Completedtsk()
+    fun completeTask() : List<ToDo> = repo.Completedtsk()
+
+    @GetMapping("/pending")
+    fun pendingTask() : List<ToDo> = repo.PendingTask()
 
     @DeleteMapping("/deleteall")
 fun deleteAll(): String {
@@ -57,9 +57,9 @@ fun deleteAll(): String {
         return "$deletecount todos deleted"
     }
 
-    @DeleteMapping("/deletebyid/{id}")
-    fun deletebyid(@RequestBody ids: List<Long>) : String {
-        val DeleteCount = repo.BulkDeleteById(ids)
-        return "${DeleteCount}deleted"
+    @DeleteMapping("/bulkdelete")
+    fun deletebyid(@RequestBody body: ToDoBulkDelete) : String {
+        val deleteCount = repo.BulkDeleteById(body.ids)
+        return "${deleteCount}deleted"
     }
 }

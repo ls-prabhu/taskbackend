@@ -41,7 +41,7 @@ interface ToDoRepository : JpaRepository<ToDo, Long> {
     @Modifying
     @Transactional
     @Query(
-        value = "DELETE FROM to_do WHERE id = (:id)",
+        value = "DELETE FROM to_do WHERE id IN (:id)",
         nativeQuery = true
     )
     fun BulkDeleteById(id: List<Long>) : Int
