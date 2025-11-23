@@ -17,7 +17,7 @@ class ToDoController(private val repo : ToDoRepository) {
         return repo.save(toDo)
     }
 
-    // Use PUT for updates
+
     @PatchMapping("/{id}")
     fun patch(@PathVariable id: Long, @RequestBody body: ToDoPatch): ToDo {
     val todo = repo.findById(id).orElseThrow()
