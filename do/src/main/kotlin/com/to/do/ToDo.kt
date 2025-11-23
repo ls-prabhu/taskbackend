@@ -1,18 +1,17 @@
 package com.to.`do`
-import jakarta.persistence.*
-import com.fasterxml.jackson.annotation.JsonFormat
-import java.time.LocalDate
-import java.time.LocalTime
 
-@Entity
+import com.fasterxml.jackson.annotation.JsonFormat
+import jakarta.persistence.GeneratedValue
+
+@jakarta.persistence.Entity
 data class ToDo(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     val id: Long = 0,
     @JsonFormat(pattern = "yyyy-MM-dd")
-    var date: LocalDate = LocalDate.now(),
+    var date: java.time.LocalDate = java.time.LocalDate.now(),
     @JsonFormat(pattern = "HH:mm")
-    var time : LocalTime? = null,
+    var time : java.time.LocalTime? = null,
     var title: String,
     var completed: Boolean = false,
-    var completedDate: LocalDate? = null,
+    var completedDate: java.time.LocalDate? = null,
 )

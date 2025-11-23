@@ -13,7 +13,7 @@ class ToDoController(private val repo : ToDoRepository) {
     fun getAll() : List<ToDo> = repo.findAll()
 
     @PostMapping
-    fun create(@RequestBody toDo: ToDo): ToDo{
+    fun create(@RequestBody toDo: ToDo): ToDo {
         return repo.save(toDo)
     }
 
