@@ -41,7 +41,7 @@ class ToDoController(private val repo : ToDoRepository) {
     }
 
     // Get all todos sorted by date and time
-    @GetMapping("/st")
+    @GetMapping("/bytime")
     fun getSortedTodos() : List<ToDo> = repo.SortAllbyDateAndTime()
 
     // Get todos grouped by status (incomplete first, then completed)

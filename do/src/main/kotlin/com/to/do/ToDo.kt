@@ -3,9 +3,11 @@ package com.to.`do`
 import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
 
 @jakarta.persistence.Entity
 data class ToDo(
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     var title: String,
